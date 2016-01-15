@@ -1,0 +1,12 @@
+# MANAGED BY PUPPET!
+<% if @headers and @headers.kind_of?(Array) and ! @headers.empty? -%>
+<% @headers.each do |header| -%>
+Header <%= header %>
+<% end -%>
+<% end -%>
+
+<% if @requestheaders and @requestheaders.kind_of?(Array) and ! @requestheaders.empty? -%>
+<% @requestheaders.each do |request| -%>
+RequestHeader <%= request %>
+<% end -%>
+<% end -%>

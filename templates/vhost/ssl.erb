@@ -1,0 +1,10 @@
+<% if @sslcertfile and ! @sslcertfile.empty? -%>
+SSLEngine on
+SSLCertificateFile "<%= @sslcertfile %>"
+<% end -%>
+<% if @sslcertkey and ! @sslcertkey.empty? -%>
+SSLCertificateKeyFile "<%= @sslcertkey %>"
+<% end -%>
+<% if @sslcertchain and ! @sslcertchain.empty? -%>
+SSLCertificateChainFile "<%= @sslcertchain %>"
+<% end -%>

@@ -1,0 +1,51 @@
+# MANAGED BY PUPPET!
+<% if @virtualhost and @virtualhost.kind_of?(Array) and ! @virtualhost.empty? -%>
+<VirtualHost <%= @virtualhost.join(" ") %>>
+<% else -%>
+<VirtualHost <%= @virtualhost %>>
+<% end -%>
+<% if @servername and ! @servername.empty? -%>
+ServerName <%= @servername %>
+<% if @serveralias and ! @serveralias.empty? -%>
+<% @serveralias.each do |sa| -%>
+ServerAlias <%= sa %>
+<% end -%>
+<% end -%>
+<% end -%>
+<% if @serveradmin and ! @serveradmin.empty? -%>
+ServerAdmin <%= @serveradmin %>
+<% end -%>
+
+<% if @documentroot and ! @documentroot.empty? -%>
+DocumentRoot <%= @documentroot %>
+
+<Directory <%= @documentroot %>>
+Options FollowSymlinks
+AllowOverride All
+</Directory>
+<% end -%>
+
+<% if @directoryindex and ! @directoryindex.empty? -%>
+DirectoryIndex <%= @directoryindex.join(" ") %>
+<% end -%>
+
+<% if @jkmountfile and ! @jkmountfile.empty? -%>
+JkMountFile jk.d/<%= @jkmountfile %>
+<% end -%>
+
+<%= scope.function_template(['apache/vhost/wsgi.erb']) -%>
+
+<%= scope.function_template(['apache/vhost/alias.erb']) -%>
+<%= scope.function_template(['apache/vhost/header.erb']) -%>
+<%= scope.function_template(['apache/vhost/include.erb']) -%>
+<%= scope.function_template(['apache/vhost/proxy.erb']) -%>
+<%= scope.function_template(['apache/vhost/rewrite.erb']) -%>
+
+<%= scope.function_template(['apache/vhost/ssl.erb']) -%>
+
+RewriteLog "|/usr/sbin/rotatelogs /var/log/httpd/rewrite_log_<%= @name %>_%Y%m%d 86400"
+RewriteLogLevel 1
+
+ErrorLog "|/usr/sbin/rotatelogs /var/log/httpd/error_log_<%= @name %>_%Y%m%d 86400"
+CustomLog "|/usr/sbin/rotatelogs /var/log/httpd/access_log_<%= @name %>_%Y%m%d 86400" combined
+</VirtualHost>

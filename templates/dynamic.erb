@@ -1,0 +1,55 @@
+# MANAGED BY PUPPET!
+<IfModule mod_vhost_alias.c>
+<% if @virtualhost and @virtualhost.kind_of?(Array) and ! @virtualhost.empty? -%>
+<VirtualHost <%= @virtualhost.join(" ") %>>
+<% else -%>
+<VirtualHost <%= @virtualhost %>>
+<% end %>
+<% if @servername and ! @servername.empty? -%>
+ServerName <%= @servername %>
+<% else -%>
+ServerName <%= @fqdn %>
+<% end %>
+<% if @serveralias and ! @serveralias.empty? -%>
+<% if @serveralias.kind_of?(Array) -%>
+<% @serveralias.each do |sa| -%>
+ServerAlias <%= sa %>
+<% end -%>
+<% else -%>
+ServerAlias <%= serveralias %>
+<% end -%>
+<% end -%>
+
+<% if @serveradmin and ! @serveradmin.empty? -%>
+ServerAdmin <%= @serveradmin %>
+<% end -%>
+
+UseCanonicalName Off
+
+<% if @documentroot and ! @documentroot.empty? -%>
+<Directory <%= @documentroot %>>
+Options FollowSymlinks
+AllowOverride All
+</Directory>
+
+VirtualDocumentRoot <%= @documentroot %>/<%= @pattern %>
+VirtualScriptAlias <%= @documentroot %>/<%= @pattern %>
+<% end -%>
+
+<% if @directoryindex and ! @directoryindex.empty? -%>
+<% if @directoryindex.kind_of?(Array) -%>
+DirectoryIndex <%= @directoryindex.join(" ") %>
+<% else -%>
+DirectoryIndex <%= directoryindex %>
+<% end -%>
+<% end -%>
+
+<%= scope.function_template(['apache/vhost/include.erb']) -%>
+  
+RewriteLog "|/usr/sbin/rotatelogs /var/log/httpd/rewrite_log_<%= @name %>_%Y%m%d 86400"
+RewriteLogLevel 1
+
+ErrorLog "|/usr/sbin/rotatelogs /var/log/httpd/error_log_<%= @name %>_%Y%m%d 86400"
+CustomLog "|/usr/sbin/rotatelogs /var/log/httpd/access_log_<%= @name %>_%Y%m%d 86400" vcombined
+</VirtualHost>
+</IfModule>

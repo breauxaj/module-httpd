@@ -1,0 +1,11 @@
+<% if @headers and ! @headers.empty? -%>
+<% @headers.each do |h| -%>
+Header <%= h %>
+<% end -%>
+<% end -%>
+
+<% if @requestheaders and ! @requestheaders.empty? -%>
+<% @requestheaders.each do |r| -%>
+RequestHeader <%= r %>
+<% end -%>
+<% end -%>
