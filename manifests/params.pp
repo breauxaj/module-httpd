@@ -17,6 +17,11 @@ class httpd::params {
       $httpd_conf_modulesd = "${httpd_root}/conf.modules.d"
       $httpd_vhostd        = "${httpd_root}/vhost.d"
 
+      $httpd_purge = [
+        $httpd_confd,
+        $httpd_vhostd
+      ]
+
       $httpd_devel         = 'httpd-devel'
       $httpd_package       = 'httpd'
 
@@ -31,21 +36,12 @@ class httpd::params {
             '/var/log/httpd'
           ]
 
-          $httpd_purge = [
-            $httpd_vhostd
-          ]
-
         }
         default: {
           $httpd_paths = [
             $httpd_root,
             "${httpd_root}/conf",
             '/var/log/httpd'
-          ]
-
-          $httpd_purge = [
-            $httpd_confd,
-            $httpd_vhostd
           ]
 
         }
