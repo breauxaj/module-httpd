@@ -46,6 +46,7 @@ class httpd::params {
 
         }
       }
+
     }
     default: { }
   }
