@@ -38,11 +38,6 @@ ServerAdmin root@<%= @fqdn %>
 
 ServerName <%= @fqdn %>
 
-#
-# Deny access to the entirety of your server's filesystem. You must
-# explicitly permit access to web content directories in other 
-# <Directory> blocks below.
-#
 <Directory />
     AllowOverride none
     Require all denied
@@ -55,12 +50,11 @@ ServerName <%= @fqdn %>
 # below.
 #
 
-#
-# DocumentRoot: The directory out of which you will serve your
-# documents. By default, all requests are taken from this directory, but
-# symbolic links and aliases may be used to point to other locations.
-#
+<% if @documentroot and ! @documentroot.empty? -%>
+DocumentRoot "<%= @documentroot %>"
+<% else -%>
 DocumentRoot "/var/www/html"
+<% end -%>
 
 #
 # Relax access to content within /var/www.
