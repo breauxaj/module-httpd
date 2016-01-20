@@ -1,4 +1,4 @@
-define apache::dynamic (
+define httpd::dynamic (
   $priority = '000',
   $virtualhost = '*:80',
   $servername = '',
@@ -9,9 +9,7 @@ define apache::dynamic (
   $directoryindex = '',
   $includes = ''
 ) {
-  $service = $::operatingsystem ? {
-    /(?i-mx:centos|fedora|redhat|scientific)/ => 'httpd',
-  }
+  include ::httpd
 
   file { "/etc/httpd/vhost.d/${priority}-${name}.conf":
     ensure  => present,
@@ -19,7 +17,7 @@ define apache::dynamic (
     group   => 'root',
     mode    => '0644',
     content => template('apache/dynamic.erb'),
-    notify  => Service[$service],
+    notify  => Service[$::httpd::params::httpd_service],
   }
 
 }
