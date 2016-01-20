@@ -28,8 +28,7 @@
 #
 define httpd::sysconfig (
   $options = '',
-  $lang = '',
-  $pidfile = ''
+  $lang = ''
 ) {
   include ::httpd
 

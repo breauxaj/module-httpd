@@ -10,7 +10,3 @@ OPTIONS="-D <%= @hostname.upcase %>"
 <% if @lang and ! @lang.empty? -%>
 HTTPD_LANG=<%= @lang %>
 <% end -%>
-
-<% if @pidfile and ! @pidfile.empty? -%>
-PIDFILE=<%= @pidfile %>
-<% end -%>
