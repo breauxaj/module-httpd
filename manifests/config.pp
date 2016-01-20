@@ -1,4 +1,4 @@
-define apache::config (
+define httpd::config (
   $servertokens = 'Prod',
   $pidfile = 'run/httpd.pid',
   $keepalive = 'Off',
@@ -34,8 +34,18 @@ define apache::config (
   $serversignature = 'On',
   $namevirtualhost = [ '*:80' ]
 ) {
-  $service = $::operatingsystem ? {
-    /(?i-mx:centos|fedora|redhat|scientific)/ => 'httpd',
+  include ::httpd
+
+  case $::httpd_version {
+    '2.4': {
+      $template = 'httpd/24/httpd.erb'
+
+    }
+    default: {
+      $template = 'httpd/22/httpd.erb'
+
+    }
+
   }
 
   file { '/etc/httpd/conf/httpd.conf':
@@ -43,8 +53,8 @@ define apache::config (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => template('apache/httpd.erb'),
-    notify  => Service[$service],
+    content => template($template ),
+    notify  => Service[$::httpd::params::httpd_service],
   }
 
 }
