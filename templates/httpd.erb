@@ -327,5 +327,9 @@ NameVirtualHost <%= n %>
 <% end -%>
 
 <% if @namevirtualhost and ! @namevirtualhost.empty? -%>
+<% if @httpd_version == '2.2' -%>
 Include vhost.d/*.conf
+<% else -%>
+IncludeOptional vhost.d/*.conf
+<% end -%>
 <% end -%>
