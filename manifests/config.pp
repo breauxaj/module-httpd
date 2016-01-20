@@ -1,6 +1,5 @@
 define httpd::config (
   $servertokens = 'Prod',
-  $pidfile = 'run/httpd.pid',
   $keepalive = 'Off',
   $maxkeepaliverequests = '100',
   $keepalivetimeout = '15',
@@ -21,11 +20,6 @@ define httpd::config (
   $servername = '',
   $usecanonicalname = 'Off',
   $documentroot = '/var/www/html',
-  $options = [ 'Indexes', 'FollowSymLinks' ],
-  $allowoverride = [ 'None' ],
-  $order = 'allow,deny',
-  $allow = [ 'all' ],
-  $deny = '',
   $directoryindex = [ 'index.html', 'index.html.var' ],
   $hostnamelookups = 'Off',
   $enablemmap = 'Off',
@@ -36,24 +30,12 @@ define httpd::config (
 ) {
   include ::httpd
 
-  case $::httpd_version {
-    '2.4': {
-      $template = 'httpd/24/httpd.erb'
-
-    }
-    default: {
-      $template = 'httpd/22/httpd.erb'
-
-    }
-
-  }
-
   file { '/etc/httpd/conf/httpd.conf':
     ensure  => present,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => template($template ),
+    content => template('httpd/httpd.erb'),
     notify  => Service[$::httpd::params::httpd_service],
   }
 

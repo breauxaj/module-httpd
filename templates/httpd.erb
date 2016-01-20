@@ -8,12 +8,6 @@ ServerTokens OS
 
 ServerRoot "/etc/httpd"
 
-<% if @pidfile and ! @pidfile.empty? -%>
-PidFile <%= @pidfile %>
-<% else -%>
-PidFile run/httpd.pid
-<% end -%>
-
 Timeout 60
 
 <% if @keepalive and ! @keepalive.empty? -%>
@@ -222,34 +216,13 @@ DocumentRoot "/var/www/html"
 <% else -%>
 <Directory "/var/www/html">
 <% end -%>
-<% if @options and ! @options.empty? -%>
-    Options <% @options.each do |o| -%><%= o %> <% end -%>
-<% else -%>
     Options Indexes FollowSymLinks
-<% end -%>
-
-<% if @allowoverride and ! @allowoverride.empty? -%>
-    AllowOverride <% @allowoverride.each do |ao| -%><%= ao %> <% end -%>
-<% else -%>
     AllowOverride None
-<% end -%>
-
-<% if @order and ! @order.empty? -%>
-    Order <%= @order %>
-<% else -%>
+<% if @httpd_version = '2.2' -%>
     Order allow,deny
-<% end -%>
-<% if @allow and ! @allow.empty? -%>
-<% @allow.each do |al| -%>
-    Allow from <%= al %>
-<% end -%>
-<% else -%>
     Allow from all
-<% end -%>
-<% if @deny and ! @deny.empty? -%>
-<% @deny.each do |de| -%>
-    Deny from <%= de %>
-<% end -%>
+<% else -%>
+    Require all granted
 <% end -%>
 </Directory>
 
@@ -262,15 +235,23 @@ DirectoryIndex index.html index.html.var
 AccessFileName .htaccess
 
 <Files ~ "^\.ht">
+<% if @httpd_version = '2.2' -%>
     Order allow,deny
     Deny from all
     Satisfy All
+<% else -%>
+    Require all denied
+<% end -%>
 </Files>
 
 <DirectoryMatch "\.(git|hg|svn)">
+<% if @httpd_version = '2.2' -%>
     Order allow,deny
     Deny from all
     Satisfy All
+<% else -%>
+    Require all denied
+<% end -%>
 </DirectoryMatch>
 
 TypesConfig /etc/mime.types
