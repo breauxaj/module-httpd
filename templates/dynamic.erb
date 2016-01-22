@@ -46,7 +46,7 @@ DirectoryIndex <%= directoryindex %>
 
 <%= scope.function_template(['apache/vhost/include.erb']) -%>
 
-#<%= @httpd_version %>
+# <%= @httpd_version %>
 
 <% if @httpd_version == '2.2' -%>
 RewriteLog "|/usr/sbin/rotatelogs /var/log/httpd/rewrite_log_<%= @name %>_%Y%m%d 86400"
