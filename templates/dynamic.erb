@@ -5,13 +5,11 @@
 <% else -%>
 <VirtualHost <%= @virtualhost %>>
 <% end %>
-
 <% if @servername and ! @servername.empty? -%>
 ServerName <%= @servername %>
 <% else -%>
 ServerName <%= @fqdn %>
 <% end %>
-
 <% if @serveralias and ! @serveralias.empty? -%>
 <% if @serveralias.kind_of?(Array) -%>
 <% @serveralias.each do |sa| -%>
@@ -21,7 +19,6 @@ ServerAlias <%= sa %>
 ServerAlias <%= serveralias %>
 <% end -%>
 <% end -%>
-
 <% if @serveradmin and ! @serveradmin.empty? -%>
 ServerAdmin <%= @serveradmin %>
 <% end -%>
