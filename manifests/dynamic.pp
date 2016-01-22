@@ -20,8 +20,4 @@ define httpd::dynamic (
     notify  => Service[$::httpd::params::httpd_service],
   }
 
-  notify { 'httpd_version_in_dynamic':
-    message => ">>> httpd_version is '${::httpd_version}'"
-  }
-
 }
