@@ -45,9 +45,13 @@ DirectoryIndex <%= directoryindex %>
 <% end -%>
 
 <%= scope.function_template(['apache/vhost/include.erb']) -%>
-  
+
+<% if @httpd_version == '2.2' -%>
 RewriteLog "|/usr/sbin/rotatelogs /var/log/httpd/rewrite_log_<%= @name %>_%Y%m%d 86400"
 RewriteLogLevel 1
+<% else -%>
+LogLevel alert rewrite:trace1
+<% end -%>
 
 ErrorLog "|/usr/sbin/rotatelogs /var/log/httpd/error_log_<%= @name %>_%Y%m%d 86400"
 CustomLog "|/usr/sbin/rotatelogs /var/log/httpd/access_log_<%= @name %>_%Y%m%d 86400" vcombined
