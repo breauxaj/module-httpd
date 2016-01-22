@@ -16,7 +16,7 @@ define httpd::dynamic (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => template('apache/dynamic.erb'),
+    content => template('httpd/dynamic.erb'),
     notify  => Service[$::httpd::params::httpd_service],
   }
 
