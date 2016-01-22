@@ -5,11 +5,13 @@
 <% else -%>
 <VirtualHost <%= @virtualhost %>>
 <% end %>
+
 <% if @servername and ! @servername.empty? -%>
 ServerName <%= @servername %>
 <% else -%>
 ServerName <%= @fqdn %>
 <% end %>
+
 <% if @serveralias and ! @serveralias.empty? -%>
 <% if @serveralias.kind_of?(Array) -%>
 <% @serveralias.each do |sa| -%>
@@ -44,9 +46,7 @@ DirectoryIndex <%= directoryindex %>
 <% end -%>
 <% end -%>
 
-<%= scope.function_template(['apache/vhost/include.erb']) -%>
-
-# <%= @httpd_version %>
+<%= scope.function_template(['httpd/vhost/include.erb']) -%>
 
 <% if @httpd_version == '2.2' -%>
 RewriteLog "|/usr/sbin/rotatelogs /var/log/httpd/rewrite_log_<%= @name %>_%Y%m%d 86400"
