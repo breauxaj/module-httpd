@@ -11,8 +11,6 @@ define httpd::dynamic (
 ) {
   include ::httpd
 
-  $httpd_version = $::httpd_version
-
   file { "/etc/httpd/vhost.d/${priority}-${name}.conf":
     ensure  => present,
     owner   => 'root',
@@ -20,6 +18,10 @@ define httpd::dynamic (
     mode    => '0644',
     content => template('apache/dynamic.erb'),
     notify  => Service[$::httpd::params::httpd_service],
+  }
+
+  notify { 'httpd_version_in_dynamic':
+    message => ">>> httpd_version is '${::httpd_version}'"
   }
 
 }
