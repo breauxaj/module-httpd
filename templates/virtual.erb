@@ -33,18 +33,22 @@ DirectoryIndex <%= @directoryindex.join(" ") %>
 JkMountFile jk.d/<%= @jkmountfile %>
 <% end -%>
 
-<%= scope.function_template(['apache/vhost/wsgi.erb']) -%>
+<%= scope.function_template(['httpd/vhost/wsgi.erb']) -%>
 
-<%= scope.function_template(['apache/vhost/alias.erb']) -%>
-<%= scope.function_template(['apache/vhost/header.erb']) -%>
-<%= scope.function_template(['apache/vhost/include.erb']) -%>
-<%= scope.function_template(['apache/vhost/proxy.erb']) -%>
-<%= scope.function_template(['apache/vhost/rewrite.erb']) -%>
+<%= scope.function_template(['httpd/vhost/alias.erb']) -%>
+<%= scope.function_template(['httpd/vhost/header.erb']) -%>
+<%= scope.function_template(['httpd/vhost/include.erb']) -%>
+<%= scope.function_template(['httpd/vhost/proxy.erb']) -%>
+<%= scope.function_template(['httpd/vhost/rewrite.erb']) -%>
 
-<%= scope.function_template(['apache/vhost/ssl.erb']) -%>
+<%= scope.function_template(['httpd/vhost/ssl.erb']) -%>
 
+<% if @httpd_version == '2.2' -%>
 RewriteLog "|/usr/sbin/rotatelogs /var/log/httpd/rewrite_log_<%= @name %>_%Y%m%d 86400"
 RewriteLogLevel 1
+<% else -%>
+LogLevel alert rewrite:trace1
+<% end -%>
 
 ErrorLog "|/usr/sbin/rotatelogs /var/log/httpd/error_log_<%= @name %>_%Y%m%d 86400"
 CustomLog "|/usr/sbin/rotatelogs /var/log/httpd/access_log_<%= @name %>_%Y%m%d 86400" combined

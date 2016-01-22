@@ -1,4 +1,4 @@
-define apache::virtual (
+define httpd::virtual (
   $priority = '000',
   $virtualhost = '*:80',
   $servername = '',
@@ -30,7 +30,7 @@ define apache::virtual (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => template('apache/virtual.erb'),
+    content => template('httpd/virtual.erb'),
     notify  => Service[$service],
   }
 
