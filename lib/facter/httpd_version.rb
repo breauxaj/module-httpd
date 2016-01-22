@@ -1,5 +1,5 @@
 require 'facter'
-Facter.add("httpd_version") do
+Facter.add(:httpd_version) do
   confine :osfamily => %w{RedHat}
   setcode do
     output = '2.2'
