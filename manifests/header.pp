@@ -9,7 +9,7 @@ define httpd::header (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => template('apache/header.erb'),
+    content => template('httpd/header.erb'),
     notify  => Service[$::httpd::params::httpd_service],
   }
 
