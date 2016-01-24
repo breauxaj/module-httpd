@@ -1,6 +1,10 @@
 # MANAGED BY PUPPET!
-<% if content and content.kind_of?(Array) and ! content.empty? -%>
+<% if content and ! content.empty? -%>
+<% if content.kind_of?(Array) -%>
 <% content.each do |con| -%>
 <%= con %>
+<% end -%>
+<% else -%>
+<%= content %>
 <% end -%>
 <% end -%>

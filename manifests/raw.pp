@@ -1,4 +1,4 @@
-define apache::raw (
+define httpd::raw (
   $content = '',
 ) {
   file { "/etc/httpd/conf.d/${name}.conf":
@@ -6,7 +6,7 @@ define apache::raw (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => template('apache/raw.erb'),
+    content => template('httpd/raw.erb'),
   }
 
 }
