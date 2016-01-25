@@ -23,7 +23,6 @@ class httpd::params {
       ]
 
       $httpd_devel         = 'httpd-devel'
-      $httpd_package       = 'httpd'
 
       $httpd_service       = 'httpd'
 
@@ -36,9 +35,10 @@ class httpd::params {
             '/var/log/httpd'
           ]
 
-          package { 'mod_ldap':
-            ensure => 'latest'
-          }
+          $httpd_package = [
+            'httpd',
+            'mod_ldap'
+          ]
 
         }
         default: {
@@ -47,6 +47,8 @@ class httpd::params {
             "${httpd_root}/conf",
             '/var/log/httpd'
           ]
+
+          $httpd_package = 'httpd'
 
         }
       }
