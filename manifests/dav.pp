@@ -1,6 +1,4 @@
-define httpd::dav (
-  $davlockdb = '/var/lib/dav/lockdb'
-) {
+define httpd::dav {
   include ::httpd
 
   file { '/etc/httpd/conf.d/dav.conf':
