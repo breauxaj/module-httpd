@@ -48,4 +48,8 @@ class httpd (
     require => Package[$::httpd::params::httpd_package],
   }
 
+  notify { 'httpd_version':
+    message => ">>> httpd_version is '${::httpd_version}'"
+  }
+
 }
