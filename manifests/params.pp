@@ -36,6 +36,10 @@ class httpd::params {
             '/var/log/httpd'
           ]
 
+          package { 'mod_ldap':
+            ensure => 'latest'
+          }
+
         }
         default: {
           $httpd_paths = [
