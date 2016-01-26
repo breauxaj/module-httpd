@@ -286,6 +286,9 @@ LogFormat "%h %l %u %t \"%r\" %>s %b" common
 LogFormat "%V %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" vcombined
 LogFormat "%V %h %l %u %t \"%r\" %>s %b" vcommon
 
+LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" \"%{X-Forwarded-For}i\"" xcombined
+LogFormat "%h %l %u %t \"%r\" %>s %b \"%{X-Forwarded-For}i\"" xcommon
+
 LogFormat "%{Referer}i -> %U" referer
 LogFormat "%{User-agent}i" agent
 
