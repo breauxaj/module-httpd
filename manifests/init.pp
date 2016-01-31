@@ -42,6 +42,15 @@ class httpd (
     require => Package[$::httpd::params::httpd_package],
   }
 
+  file { $::httpd::params::httpd_log_script:
+    ensure  => present,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    source => "puppet:///modules/httpd/compress-logs.sh',
+    require => Package[$::httpd::params::httpd_package],
+  }
+
   service { $::httpd::params::httpd_service:
     ensure  => running,
     enable  => true,
