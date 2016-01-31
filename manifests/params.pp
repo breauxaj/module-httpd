@@ -22,6 +22,8 @@ class httpd::params {
         $httpd_vhostd
       ]
 
+      $httpd_log_script        = '/usr/local/sbin/compress-logs.sh'
+
       $httpd_devel         = 'httpd-devel'
 
       $httpd_service       = 'httpd'
