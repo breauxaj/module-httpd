@@ -47,7 +47,7 @@ class httpd (
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
-    source => "puppet:///modules/httpd/compress-logs.sh',
+    source => 'puppet:///modules/httpd/compress-logs.sh',
     require => Package[$::httpd::params::httpd_package],
   }
 
