@@ -16,7 +16,7 @@ ServerName <%= @fqdn %>
 ServerAlias <%= sa %>
 <% end -%>
 <% else -%>
-ServerAlias <%= serveralias %>
+ServerAlias <%= @serveralias %>
 <% end -%>
 <% end -%>
 <% if @serveradmin and ! @serveradmin.empty? -%>

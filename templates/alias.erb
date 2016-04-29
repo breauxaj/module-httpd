@@ -1,0 +1,20 @@
+# MANAGED BY PUPPET!
+<% if @aliases and ! @aliases.empty?  -%>
+<% if @aliases.kind_of?(Array) -%>
+<% @aliases.each do |a| -%>
+Alias <%= a %>
+<% end -%>
+<% else -%>
+Alias <%= @aliases %>
+<% end -%>
+<% end -%>
+
+<% if @aliasmatches and ! @aliasmatches.empty?  -%>
+<% if @aliasmatches.kind_of?(Array) -%>
+<% @aliasmatches.each do |am| -%>
+AliasMatch <%= am %>
+<% end -%>
+<% else -%>
+AliasMatch <%= @aliasmatches %>
+<% end -%>
+<% end -%>
