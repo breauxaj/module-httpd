@@ -2,9 +2,17 @@
 <% if @includes and ! @includes.empty? -%>
 <% if @includes.kind_of?(Array) -%>
 <% @includes.each do |include| -%>
+<% if @httpd_version == '2.2' -%>
 Include <%= include %>
+<% else -%>
+IncludeOptional <%= include %>
+<% end -%>
 <% end -%>
 <% else -%>
+<% if @httpd_version == '2.2' -%>
 Include <%= @includes %>
+<% else -%>
+IncludeOptional <%= @includes %>
+<% end -%>
 <% end -%>
 <% end -%>
