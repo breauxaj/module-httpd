@@ -23,7 +23,7 @@ class httpd (
     'RedHat': {
       case $::lsbmajdistrelease {
         '7': {
-          package { $::httpd::params::httpd_package:
+          package { $::httpd::params::httpd_packages:
             ensure  => $ensure,
           }
 
@@ -36,7 +36,7 @@ class httpd (
             purge   => true,
             force   => true,
             notify  => Service[$::httpd::params::httpd_service],
-            require => Package[$::httpd::params::httpd_package],
+            require => Package[$::httpd::params::httpd_packages],
           }
 
           file { $::httpd::params::httpd_paths:
@@ -44,7 +44,7 @@ class httpd (
             owner   => 'root',
             group   => 'root',
             mode    => '0755',
-            require => Package[$::httpd::params::httpd_package],
+            require => Package[$::httpd::params::httpd_packages],
           }
 
           file { '/etc/httpd/conf.d/status.conf':
@@ -54,7 +54,7 @@ class httpd (
             mode    => '0644',
             content => template('httpd/status.erb'),
             notify  => Service[$::httpd::params::httpd_service],
-            require => Package[$::httpd::params::httpd_package],
+            require => Package[$::httpd::params::httpd_packages],
           }
 
           $alias = hiera_hash('httpd::aliases',{})
@@ -81,7 +81,7 @@ class httpd (
           service { $::httpd::params::httpd_service:
             ensure  => running,
             enable  => true,
-            require => Package[$::httpd::params::httpd_package],
+            require => Package[$::httpd::params::httpd_packages],
           }
         }
         default: {
