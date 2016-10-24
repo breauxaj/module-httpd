@@ -4,32 +4,32 @@
 #
 # Actions:
 #   - Defines numerous parameters used by other classes
-#   - Does not support other osfamily patterns - redhat only
+#   - Does not support other osfamily patterns - RedHat 7 only
 #
 class httpd::params {
+  $httpd_package_ensure = 'latest'
+
   case $::osfamily {
-    'redhat': {
-      $httpd_root          = '/etc/httpd'
-
-      $httpd_conf          = "${httpd_root}/conf/httpd.conf"
-
-      $httpd_confd         = "${httpd_root}/conf.d"
-      $httpd_conf_modulesd = "${httpd_root}/conf.modules.d"
-      $httpd_vhostd        = "${httpd_root}/vhost.d"
-
-      $httpd_purge = [
-        $httpd_confd,
-        $httpd_vhostd
-      ]
-
-      $httpd_log_script        = '/usr/local/sbin/compress-logs.sh'
-
-      $httpd_devel         = 'httpd-devel'
-
-      $httpd_service       = 'httpd'
-
+    'RedHat': {
       case $::lsbmajdistrelease {
         '7': {
+          $httpd_root          = '/etc/httpd'
+
+          $httpd_conf          = "${httpd_root}/conf/httpd.conf"
+
+          $httpd_confd         = "${httpd_root}/conf.d"
+          $httpd_conf_modulesd = "${httpd_root}/conf.modules.d"
+          $httpd_vhostd        = "${httpd_root}/vhost.d"
+
+          $httpd_devel         = 'httpd-devel'
+
+          $httpd_service       = 'httpd'
+
+          $httpd_packages = [
+            'httpd',
+            'mod_ldap'
+          ]
+
           $httpd_paths = [
             $httpd_root,
             "${httpd_root}/conf",
@@ -37,26 +37,21 @@ class httpd::params {
             '/var/log/httpd'
           ]
 
-          $httpd_package = [
-            'httpd',
-            'mod_ldap'
+          $httpd_purge = [
+            $httpd_confd,
+            $httpd_vhostd
           ]
 
         }
         default: {
-          $httpd_paths = [
-            $httpd_root,
-            "${httpd_root}/conf",
-            '/var/log/httpd'
-          ]
-
-          $httpd_package = 'httpd'
-
+          fail("The ${module_name} module is not supported on an ${::osfamily} ${::operatingsystemmajrelease} distribution.")
         }
       }
 
     }
-    default: { }
+    default: {
+      fail("The ${module_name} module is not supported on an ${::osfamily} based system.")
+    }
   }
 
 }
