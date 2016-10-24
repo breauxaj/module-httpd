@@ -1,4 +1,3 @@
-# MANAGED BY PUPPET!
 <IfModule mod_vhost_alias.c>
 <% if @virtualhost and @virtualhost.kind_of?(Array) and ! @virtualhost.empty? -%>
 <VirtualHost <%= @virtualhost.join(" ") %>>
@@ -25,6 +24,8 @@ ServerAdmin <%= @serveradmin %>
 
 UseCanonicalName Off
 
+<%= scope.function_template(['httpd/setenv.erb']) -%>
+
 <% if @documentroot and ! @documentroot.empty? -%>
 <Directory <%= @documentroot %>>
 Options FollowSymlinks
@@ -43,14 +44,11 @@ DirectoryIndex <%= directoryindex %>
 <% end -%>
 <% end -%>
 
-<%= scope.function_template(['httpd/vhost/include.erb']) -%>
+<%= scope.function_template(['httpd/include.erb']) -%>
 
-<% if @httpd_version == '2.2' -%>
-RewriteLog "|/usr/sbin/rotatelogs /var/log/httpd/rewrite_log_<%= @name %>_%Y%m%d 86400"
-RewriteLogLevel 1
-<% else -%>
+<%= scope.function_template(['httpd/ssl.erb']) -%>
+
 LogLevel alert rewrite:trace1
-<% end -%>
 
 ErrorLog "|/usr/sbin/rotatelogs /var/log/httpd/error_log_<%= @name %>_%Y%m%d 86400"
 CustomLog "|/usr/sbin/rotatelogs /var/log/httpd/access_log_<%= @name %>_%Y%m%d 86400" vcombined

@@ -1,4 +1,3 @@
-# MANAGED BY PUPPET!
 <% if @virtualhost and @virtualhost.kind_of?(Array) and ! @virtualhost.empty? -%>
 <VirtualHost <%= @virtualhost.join(" ") %>>
 <% else -%>
@@ -6,15 +5,28 @@
 <% end -%>
 <% if @servername and ! @servername.empty? -%>
 ServerName <%= @servername %>
+<% end -%>
 <% if @serveralias and ! @serveralias.empty? -%>
+<% if @serveralias.kind_of?(Array) -%>
 <% @serveralias.each do |sa| -%>
 ServerAlias <%= sa %>
 <% end -%>
+<% else -%>
+ServerAlias <%= @serveralias %>
 <% end -%>
 <% end -%>
 <% if @serveradmin and ! @serveradmin.empty? -%>
 ServerAdmin <%= @serveradmin %>
 <% end -%>
+
+<% if @tohttps and ! @tohttps.empty?  -%>
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+<% else -%>
+
+<%= scope.function_template(['httpd/setenv.erb']) -%>
 
 <% if @documentroot and ! @documentroot.empty? -%>
 DocumentRoot <%= @documentroot %>
@@ -29,11 +41,14 @@ AllowOverride All
 DirectoryIndex <%= @directoryindex.join(" ") %>
 <% end -%>
 
-<% if @jkmountfile and ! @jkmountfile.empty? -%>
-JkMountFile jk.d/<%= @jkmountfile %>
-<% end -%>
+<%= scope.function_template(['httpd/alias.erb']) -%>
+<%= scope.function_template(['httpd/directory.erb']) -%>
+<%= scope.function_template(['httpd/header.erb']) -%>
+<%= scope.function_template(['httpd/include.erb']) -%>
+<%= scope.function_template(['httpd/proxy.erb']) -%>
+<%= scope.function_template(['httpd/rewrite.erb']) -%>
 
-<%= scope.function_template(['httpd/vhost/wsgi.erb']) -%>
+<%= scope.function_template(['httpd/ssl.erb']) -%>
 
 <%= scope.function_template(['httpd/vhost/alias.erb']) -%>
 <%= scope.function_template(['httpd/vhost/header.erb']) -%>
@@ -52,4 +67,6 @@ LogLevel alert rewrite:trace1
 
 ErrorLog "|/usr/sbin/rotatelogs /var/log/httpd/error_log_<%= @name %>_%Y%m%d 86400"
 CustomLog "|/usr/sbin/rotatelogs /var/log/httpd/access_log_<%= @name %>_%Y%m%d 86400" combined
+
+<% end -%>
 </VirtualHost>
