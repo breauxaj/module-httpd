@@ -11,6 +11,7 @@ define httpd::alias (
     mode    => '0644',
     content => template('httpd/alias.erb'),
     notify  => Service[$::httpd::params::httpd_service],
+    require => Package[$::httpd::params::httpd_packages],
   }
 
 }
