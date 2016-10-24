@@ -11,6 +11,7 @@ define httpd::header (
     mode    => '0644',
     content => template('httpd/header.erb'),
     notify  => Service[$::httpd::params::httpd_service],
+    require => Package[$::httpd::params::httpd_packages],
   }
 
 }
