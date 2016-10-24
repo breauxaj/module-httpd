@@ -1,13 +1,17 @@
 define httpd::dynamic (
-  $priority = '000',
-  $virtualhost = '*:80',
-  $servername = '',
-  $serveralias = '',
-  $serveradmin = '',
-  $documentroot = '',
-  $pattern = '',
+  $priority =       '000',
+  $virtualhost =    '*:80',
+  $servername =     '',
+  $serveralias =    '',
+  $serveradmin =    '',
+  $setenvs =        '',
+  $documentroot =   '',
+  $pattern =        '',
   $directoryindex = '',
-  $includes = ''
+  $includes =       '',
+  $sslcertfile =    '',
+  $sslcertkey =     '',
+  $sslcertchain =   ''
 ) {
   include ::httpd
 
