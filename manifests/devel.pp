@@ -25,7 +25,7 @@ class httpd::devel (
         '7': {
           package { $::httpd::params::httpd_devel:
             ensure  => $ensure,
-            require => Package[$::httpd::params::httpd_package],
+            require => Package[$::httpd::params::httpd_devel],
           }
         }
         default: {
