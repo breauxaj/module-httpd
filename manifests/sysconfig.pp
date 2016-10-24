@@ -23,7 +23,6 @@
 #    httpd::sysconfig { 'default':
 #      options => 'PROD',
 #      lang    => 'en_US.UTF-8',
-#      pidfile => '/var/run/httpd.pid'
 #    }
 #
 define httpd::sysconfig (
