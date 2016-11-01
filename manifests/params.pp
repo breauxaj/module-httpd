@@ -21,14 +21,19 @@ class httpd::params {
           $httpd_conf_modulesd = "${httpd_root}/conf.modules.d"
           $httpd_vhostd        = "${httpd_root}/vhost.d"
 
-          $httpd_devel         = 'httpd-devel'
+          $httpd_purge = [
+            $httpd_confd,
+            $httpd_vhostd
+          ]
 
-          $httpd_service       = 'httpd'
-
-          $httpd_packages = [
+          $httpd_packages      = [
             'httpd',
             'mod_ldap'
           ]
+
+          $httpd_devel         = 'httpd-devel'
+
+          $httpd_service       = 'httpd'
 
           $httpd_paths = [
             $httpd_root,
@@ -36,12 +41,6 @@ class httpd::params {
             $httpd_conf_modulesd,
             '/var/log/httpd'
           ]
-
-          $httpd_purge = [
-            $httpd_confd,
-            $httpd_vhostd
-          ]
-
         }
         default: {
           fail("The ${module_name} module is not supported on an ${::osfamily} ${::operatingsystemmajrelease} distribution.")
