@@ -8,7 +8,6 @@ define httpd::dav {
     mode    => '0644',
     content => template('httpd/dav.erb'),
     notify  => Service[$::httpd::params::httpd_service],
-    require => Package[$::httpd::params::httpd_packages],
   }
 
 }
