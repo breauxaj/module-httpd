@@ -46,7 +46,6 @@ class httpd::params {
           fail("The ${module_name} module is not supported on an ${::osfamily} ${::operatingsystemmajrelease} distribution.")
         }
       }
-
     }
     default: {
       fail("The ${module_name} module is not supported on an ${::osfamily} based system.")
