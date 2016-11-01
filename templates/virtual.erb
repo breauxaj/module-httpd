@@ -28,14 +28,7 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
 <%= scope.function_template(['httpd/setenv.erb']) -%>
 
-<% if @documentroot and ! @documentroot.empty? -%>
-DocumentRoot <%= @documentroot %>
-
-<Directory <%= @documentroot %>>
-Options FollowSymlinks
-AllowOverride All
-</Directory>
-<% end -%>
+<%= scope.function_template(['httpd/documentroot.erb']) -%>
 
 <% if @directoryindex and ! @directoryindex.empty? -%>
 DirectoryIndex <%= @directoryindex.join(" ") %>
@@ -50,20 +43,7 @@ DirectoryIndex <%= @directoryindex.join(" ") %>
 
 <%= scope.function_template(['httpd/ssl.erb']) -%>
 
-<%= scope.function_template(['httpd/vhost/alias.erb']) -%>
-<%= scope.function_template(['httpd/vhost/header.erb']) -%>
-<%= scope.function_template(['httpd/vhost/include.erb']) -%>
-<%= scope.function_template(['httpd/vhost/proxy.erb']) -%>
-<%= scope.function_template(['httpd/vhost/rewrite.erb']) -%>
-
-<%= scope.function_template(['httpd/vhost/ssl.erb']) -%>
-
-<% if @httpd_version == '2.2' -%>
-RewriteLog "|/usr/sbin/rotatelogs /var/log/httpd/rewrite_log_<%= @name %>_%Y%m%d 86400"
-RewriteLogLevel 1
-<% else -%>
 LogLevel alert rewrite:trace1
-<% end -%>
 
 ErrorLog "|/usr/sbin/rotatelogs /var/log/httpd/error_log_<%= @name %>_%Y%m%d 86400"
 CustomLog "|/usr/sbin/rotatelogs /var/log/httpd/access_log_<%= @name %>_%Y%m%d 86400" combined
