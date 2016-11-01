@@ -11,9 +11,7 @@ Samples
 include httpd
 ```
 ```
-class { 'httpd':
-
-}
+class { 'httpd': }
 ```
 
 License
