@@ -1,0 +1,9 @@
+<% if @setenvs and ! @setenvs.empty?  -%>
+<% if @setenvs.kind_of?(Array) -%>
+<% @setenvs.each do |s| -%>
+SetEnv <%= s %>
+<% end -%>
+<% else -%>
+SetEnv <%= @setenvs %>
+<% end -%>
+<% end -%>

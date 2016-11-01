@@ -1,0 +1,8 @@
+<% if @proxies and ! @proxies.empty? -%>
+<% @proxies.sort_by {|key, value| key}.each do |key, value| -%>
+<Location <%= key %>>
+ProxyPass <%= value['url'] %>
+ProxyPassReverse <%= value['url'] %>
+</Location>
+<% end -%>
+<% end -%>
