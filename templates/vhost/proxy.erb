@@ -1,8 +1,0 @@
-<% if @proxy_pass and ! @proxy_pass.empty? -%>
-<% @proxy_pass.flatten.compact.each do |proxy| %>
-<Location <%= proxy['path'] %>>
-ProxyPass <%= proxy['url'] %>
-ProxyPassReverse <%= proxy['url'] %>
-</Location>
-<% end %>
-<% end -%>
