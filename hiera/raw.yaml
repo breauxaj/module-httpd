@@ -1,0 +1,11 @@
+httpd::raw:
+  'rewrites':
+    content: |
+      # HEADER: This file is managed by Puppet and editing is strongly
+      # HEADER: discouraged. This file will be replaced upon the next
+      # HEADER: agent cycle without warning.
+      RewriteEngine on
+      
+      # User agent blank, reject the request!
+      RewriteCond %{HTTP_USER_AGENT} ^-?$
+      RewriteRule .* - [G]

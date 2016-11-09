@@ -72,6 +72,9 @@ class httpd (
           $include = hiera_hash('httpd::includes',{})
           create_resources('httpd::include',$include)
 
+          $raw = hiera_hash('httpd::raw',{})
+          create_resources('httpd::raw',$raw)
+
           $sysconfig = hiera_hash('httpd::sysconfig',{})
           create_resources('httpd::sysconfig',$sysconfig)
 
