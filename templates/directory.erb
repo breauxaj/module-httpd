@@ -1,0 +1,16 @@
+<% if @documentroot and ! @documentroot.empty? -%>
+<% if @directories.empty? -%>
+<Directory <%= @documentroot %>>
+Options FollowSymlinks
+AllowOverride All
+</Directory>
+<% end -%>
+<% end -%>
+
+<% if @directories and ! @directories.empty? -%>
+<% @directories.sort_by {|key, value| key}.each do |key, value| -%>
+<Directory <%= key %>>
+<%= value['config'].chomp %>
+</Directory>
+<% end -%>
+<% end -%>
