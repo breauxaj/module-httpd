@@ -1,0 +1,6 @@
+httpd::virtuals:
+  'default':
+    priority:     '000'
+    virtualhost:  '*:80'
+    servername:   '[sitename]'
+    documentroot: '/var/www/html'
