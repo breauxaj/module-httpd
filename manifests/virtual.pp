@@ -12,6 +12,8 @@ define httpd::virtual (
   $aliasmatches = '',
   $headers = '',
   $requestheaders = '',
+  $phpflags = '',
+  $phpvalues = '',
   $proxies = '',
   $includes = '',
   $rewrites = '',
