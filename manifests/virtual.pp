@@ -22,9 +22,7 @@ define httpd::virtual (
   $sslcertkey = '',
   $sslcertchain = ''
 ) {
-  $service = $::operatingsystem ? {
-    /(?i-mx:centos|fedora|redhat|scientific)/ => 'httpd',
-  }
+  include ::httpd
 
   file { "/etc/httpd/vhost.d/${priority}-${name}.conf":
     ensure  => present,
@@ -32,7 +30,7 @@ define httpd::virtual (
     group   => 'root',
     mode    => '0644',
     content => template('httpd/virtual.erb'),
-    notify  => Service[$service],
+    notify  => Service[$::httpd::params::httpd_service],
   }
 
 }
