@@ -12,6 +12,36 @@ class httpd::params {
   case $::osfamily {
     'RedHat': {
       case $::lsbmajdistrelease {
+        '2016': {
+          $httpd_root          = '/etc/httpd'
+
+          $httpd_conf          = "${httpd_root}/conf/httpd.conf"
+
+          $httpd_confd         = "${httpd_root}/conf.d"
+          $httpd_conf_modulesd = "${httpd_root}/conf.modules.d"
+          $httpd_vhostd        = "${httpd_root}/vhost.d"
+
+          $httpd_purge = [
+            $httpd_confd,
+            $httpd_vhostd
+          ]
+
+          $httpd_packages      = [
+            'httpd24',
+            'mod24_ldap'
+          ]
+
+          $httpd_devel         = 'httpd24-devel'
+
+          $httpd_service       = 'httpd'
+
+          $httpd_paths = [
+            $httpd_root,
+            "${httpd_root}/conf",
+            $httpd_conf_modulesd,
+            '/var/log/httpd'
+          ]
+        }
         '7': {
           $httpd_root          = '/etc/httpd'
 
