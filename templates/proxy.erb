@@ -1,4 +1,6 @@
 <% if @proxies and ! @proxies.empty? -%>
+ProxyPreserveHost On
+
 <% @proxies.sort_by {|key, value| key}.each do |key, value| -%>
 <Location <%= key %>>
 ProxyPass <%= value['url'] %>

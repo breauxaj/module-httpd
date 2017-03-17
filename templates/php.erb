@@ -1,0 +1,40 @@
+<IfModule php5_module>
+<% if @phpflags and ! @phpflags.empty?  -%>
+<% if @phpflags.kind_of?(Array) -%>
+<% @phpflags.each do |f| -%>
+php_flag <%= f %>
+<% end -%>
+<% else -%>
+php_flag <%= @phpflags %>
+<% end -%>
+<% end -%>
+<% if @phpvalues and ! @phpvalues.empty?  -%>
+<% if @phpvalues.kind_of?(Array) -%>
+<% @phpvalues.each do |v| -%>
+php_value <%= v %>
+<% end -%>
+<% else -%>
+php_value <%= @phpvalues %>
+<% end -%>
+<% end -%>
+</IfModule>
+<IfModule php7_module>
+<% if @phpflags and ! @phpflags.empty?  -%>
+<% if @phpflags.kind_of?(Array) -%>
+<% @phpflags.each do |f| -%>
+php_flag <%= f %>
+<% end -%>
+<% else -%>
+php_flag <%= @phpflags %>
+<% end -%>
+<% end -%>
+<% if @phpvalues and ! @phpvalues.empty?  -%>
+<% if @phpvalues.kind_of?(Array) -%>
+<% @phpvalues.each do |v| -%>
+php_value <%= v %>
+<% end -%>
+<% else -%>
+php_value <%= @phpvalues %>
+<% end -%>
+<% end -%>
+</IfModule>
