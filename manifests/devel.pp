@@ -19,23 +19,9 @@
 class httpd::devel (
   $ensure = $::httpd::params::httpd_package_ensure
 ) inherits ::httpd::params {
-  case $::osfamily {
-    'RedHat': {
-      case $::lsbmajdistrelease {
-        '7': {
-          package { $::httpd::params::httpd_devel:
-            ensure  => $ensure,
-            require => Package[$::httpd::params::httpd_packages],
-          }
-        }
-        default: {
-          fail("The ${module_name} module is not supported on an ${::osfamily} ${::operatingsystemmajrelease} distribution.")
-        }
-      }
-    }
-    default: {
-      fail("The ${module_name} module is not supported on an ${::osfamily} based system.")
-    }
+  package { $::httpd::params::httpd_devel:
+    ensure  => $ensure,
+    require => Package[$::httpd::params::httpd_packages],
   }
 
 }

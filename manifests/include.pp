@@ -1,6 +1,8 @@
 define httpd::include (
   $includes = ''
 ) {
+  include ::httpd
+
   file { '/etc/httpd/conf.d/include.conf':
     ensure  => present,
     owner   => 'root',
