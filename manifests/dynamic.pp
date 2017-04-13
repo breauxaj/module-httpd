@@ -15,13 +15,14 @@ define httpd::dynamic (
 ) {
   include ::httpd
 
-  file { "/etc/httpd/vhost.d/${priority}-${name}.conf":
+  file { "${::httpd::params::httpd_vhostd}/${priority}-${name}.conf":
     ensure  => present,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
     content => template('httpd/dynamic.erb'),
     notify  => Service[$::httpd::params::httpd_service],
+    require => Package[$::httpd::params::httpd_packages],
   }
 
 }

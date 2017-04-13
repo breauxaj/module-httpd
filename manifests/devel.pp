@@ -21,6 +21,7 @@ class httpd::devel (
 ) inherits ::httpd::params {
   package { $::httpd::params::httpd_devel:
     ensure  => $ensure,
+    notify  => Service[$::httpd::params::httpd_service],
     require => Package[$::httpd::params::httpd_packages],
   }
 

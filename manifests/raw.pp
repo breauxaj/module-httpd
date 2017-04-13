@@ -3,7 +3,7 @@ define httpd::raw (
 ) {
   include ::httpd
 
-  file { "/etc/httpd/conf.d/${name}.conf":
+  file { "${::httpd::params::httpd_confd}/${name}.conf":
     ensure  => present,
     owner   => 'root',
     group   => 'root',

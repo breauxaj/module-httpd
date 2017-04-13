@@ -1,6 +1,3 @@
-# MANAGED BY PUPPET!
-# Configuration file for the httpd service.
-
 <% if @options and @options.kind_of?(Array) and ! @options.empty? -%>
 OPTIONS="-D<%= @options.reject(&:empty?).join(' -D') -%> -D<%= @hostname.upcase %>"
 <% else -%>

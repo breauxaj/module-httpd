@@ -31,13 +31,14 @@ define httpd::sysconfig (
 ) {
   include ::httpd
 
-  file { '/etc/sysconfig/httpd':
+  file { $::httpd::params::httpd_sysconfig:
     ensure  => present,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
     content => template('httpd/sysconfig.erb'),
     notify  => Service[$::httpd::params::httpd_service],
+    require => Package[$::httpd::params::httpd_packages],
   }
 
 }
