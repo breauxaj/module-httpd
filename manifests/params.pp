@@ -17,7 +17,7 @@ class httpd::params {
       $httpd_alias         = "${httpd_confd}/alias.conf"
       $httpd_dav           = "${httpd_confd}/dav.conf"
       $httpd_header        = "${httpd_confd}/header.conf"
-      $httpd_include       = "${httpd_confd}/include.conf"      
+      $httpd_include       = "${httpd_confd}/include.conf"
       $httpd_conf          = "${httpd_root}/conf/httpd.conf"
       $httpd_conf_modulesd = "${httpd_root}/conf.modules.d"
       $httpd_vhostd        = "${httpd_root}/vhost.d"
